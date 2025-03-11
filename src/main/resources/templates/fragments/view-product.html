@@ -1,0 +1,22 @@
+
+    <section id="product1" class="section-p1" th:fragment="view-product">
+        <!-- <h2>Featured Products</h2>
+        <p>Summer Collection New Modern Design</p> -->
+        <div class="pro-container">
+            <div class="pro" th:each="product : ${list}">
+                <a th:href="'/quick-view/'+${product.id}"><img th:src="'data:image/jpeg;base64,' + ${product.base64Image()}" alt="Image"></a>
+                <div class="des">
+                    <span th:text="${product.brand}"></span>
+                    <h5 th:text="${product.name}"></h5>
+                    <h5 th:if="${product.stock > 0}">
+                        Stock: <span th:text="${product.stock}"></span>
+                    </h5>
+                    <h4>₹<span th:text="${product.price}"></span></h4>
+                </div>
+                <a th:if="${product.stock > 0}" th:href="'/add-cart/'+${product.id}">
+                    <i class="fa-solid fa-cart-plus carticon"></i>
+                </a>
+                <h5 th:unless="${product.stock > 0}" style="color: red;">Out of Stock</h5>
+            </div>
+        </div>
+    </section>

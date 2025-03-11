@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Customer Registration</title>
+<link rel="stylesheet" href="/css/home.css">
+	<script type="text/javascript" src="script/home.js" defer="defer"></script>
+</head>
+<body>
+	<h1>Customer Registration</h1>
+
+	<h3 id="fail-message" th:text="${session.fail}" style="display: none;"></h3>
+	<h4 id="pass-message" th:text="${session.pass}" style="display: none;"></h4>
+	<div id="popup" class="popup">
+		<th:block th:text="${@myService.removeMessage()}"></th:block>
+	</div>
+<div>
+	<form action="/customer-signup" method="post" class="cl">
+		<label for="name">Name</label>
+		<input type="text" name="name" id="name" required="required"> <br>
+		<label for="mobile">Mobile</label>
+		<input type="number" name="mobile" id="mobile" required="required"><br>
+		<label for="email">Email</label>
+		<input type="email" name="email" id="email" required="required"><br>
+		<label for="password">Password</label>
+		<input type="password" name="password" id="password" required="required"> <br>
+		<div class="button">
+		<button>Submit</button>
+		<button type="reset">Cancel</button>
+
+		</div>
+		<span>If you have an account, <a href="customer-login">click here</a> to login.</span>
+		
+	</form>
+<a href="/"> <button>Back</button></a>
+</div>
+</body>
+</html>

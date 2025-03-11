@@ -1,0 +1,114 @@
+@charset "UTF-8";
+h1{
+	color: blue;
+}
+h3{
+	color: red;
+	
+}
+h4{
+	color: green;
+}
+body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: #121212;
+            color: white;
+        }
+
+        form {
+        	width:300px;
+            background: rgb(128, 128, 192)      ;      
+            padding: 20px;
+            display: inline-block;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        label {
+            display: block;
+            margin-top: 20px;
+        }
+
+        input {
+            width: 80%;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            background: #222;
+            color: white;
+        }
+		.button{
+		
+			display: flex;
+			justify-content: space-around;
+			
+		}
+        button {
+        	
+            margin: 15px 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #ff5733;
+            color: white;
+            transition: 0.3s;
+            box-shadow: 0 0 10px #ff5733;
+            
+        }
+
+        button:hover {
+            background: #ff4500;
+            box-shadow: 0 0 20px #ff4500;
+            transform: scale(1.05);
+        }
+        
+        
+        
+		        .popup {
+		    display: none;
+		    position: fixed;
+		    top: 90px;
+		    left: 50%;
+		    transform: translateX(-50%);
+		    padding: 15px 20px;
+		    border-radius: 5px;
+		    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+		    z-index: 1000;
+		    font-weight: bold;
+		    animation: fadeInOut 10s linear;
+		}
+		
+		/* Red popup for failure */
+		.popup.fail {
+		    background: rgba(255, 0, 0, 0.8);
+		    color: white;
+		}
+		
+		/* Green popup for success */
+		.popup.pass {
+		    background: rgba(0, 128, 0, 0.8);
+		    color: white;
+		}
+		
+		@keyframes fadeInOut {
+		    0% { opacity: 0; }
+		    10% { opacity: 1; }
+		    90% { opacity: 1; }
+		    100% { opacity: 0; }
+		}
+
+        
+        
+        
+
+        
+        
+        
+        
+        

@@ -1,0 +1,61 @@
+<!-- templates/fragments/navbar.html -->
+<section id="header" th:fragment="navbar">
+    <a href="#">
+        <img class="logo" src="/images/Logo/logo3.png" alt="logo" style="margin: -5px; height: 50px; border-radius: 60px;">
+    </a>
+	
+    <div>
+        <ul id="navbar">
+            <li><a href="/" th:if="${session.customer == null}">Home</a></li>
+            <li class="dropdown">
+                <a href="/customer-home" th:if="${session.customer != null}">Shop</a>
+                <a href="#" th:if="${session.customer == null}">Shop</a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Men</a></li>
+                    <li><a href="/womenfootwear">Women</a></li>
+                    <li><a href="#">Baby</a></li>
+                    <li><a href="#">Electronics</a></li>
+                    <li><a href="#">Home & Furniture</a></li>
+                </ul>
+            </li>
+
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+
+            <!-- Show Login & SignUp if user is NOT logged in -->
+            <li class="dropdown" th:if="${session.customer == null}">
+                <a href="#" class="dropbtn">Login</a>
+                <div class="dropdown-content">
+                    <a href="/customer-login">Customer Login</a>
+                    <a href="/seller-login">Seller Login</a>
+                </div>
+            </li>
+
+            <li class="dropdown" th:if="${session.customer == null}">
+                <a href="#" class="dropbtn">SignUp</a>
+                <div class="dropdown-content">
+                    <a href="/customer-signup">Customer SignUp</a>
+                    <a href="/seller-signup">Seller SignUp</a>
+                </div>
+            </li>
+
+            <!-- Show Profile if user is logged in -->
+            <li class="dropdown" th:if="${session.customer != null}">
+                <a href="#" class="dropbtn">
+                    <i class="fa fa-user"></i>
+                    <span th:text="${session.customer.name}">Profile</span>
+                </a>
+                <div class="dropdown-content">
+                <a th:href="'/customer-profile/' + ${session.customer.id}"><i class="fa fa-user-circle"></i> My Profile</a>
+                
+                    <a href="/view-orders"><i class="fa fa-shopping-bag"></i> My Orders</a>
+                    <a href="/logout"><i class="fa fa-sign-out"></i> Logout</a>
+                </div>
+            </li>
+
+            <li id="rm-cart" th:if="${session.customer != null}">
+                <a href="/view-cart"><i class="fa fa-shopping-cart"></i> Cart</a>
+            </li>
+        </ul>
+    </div>
+</section>

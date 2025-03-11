@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Add Product</title>
+	
+
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f4f4f4;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			margin: 0;
+		}
+
+		.container {
+			background: white;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+			width: 450px;
+			text-align: center;
+
+		}
+
+		h1 {
+			margin-top: 10px;
+			color: #333;
+		}
+
+		table {
+			width: 100%;
+		}
+
+		td {
+			padding: 5px;
+			text-align: left;
+		}
+
+		input,
+		textarea {
+			width: 80%;
+			padding: 8px;
+			margin-top: 5px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+		}
+
+		button {
+			background-color: #28a745;
+			color: white;
+			padding: 10px 15px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			font-size: 16px;
+			width: 100%;
+		}
+
+		.cancel {
+			background-color: red;
+		}
+
+		.cancel:hover {
+			background-color: goldenrod;
+		}
+
+		button:hover {
+			background-color: #218838;
+		}
+	</style>
+</head>
+
+<body>
+	<h3 id="fail-message" th:text="${session.fail}" style="display: none;"></h3>
+	<h4 id="pass-message" th:text="${session.pass}" style="display: none;"></h4>
+
+	<!-- Popup Notification -->
+	<div id="popup" class="popup">
+		<th:block th:text="${@myService.removeMessage()}"></th:block>
+	</div>
+	<div class="container">
+		<h1>Edit Product</h1>
+		<form action="/edit-product" enctype="multipart/form-data" method="post">
+			<table>
+				<tr>
+					<td><input type="text" name="id" th:value="${product.id}" hidden></td>
+				</tr>
+				<tr>
+					<td><label for="name">Name</label></td>
+					<td><input type="text" name="name" id="name" th:value="${product.name}"></td>
+				</tr>
+				<tr>
+					<td><label for="brand">BrandName</label></td>
+					<td><input type="text" name="brand" id="brand" th:value="${product.brand}"></td>
+				</tr>
+				<tr>
+					<td><label for="price">Price</label></td>
+					<td><input type="text" name="price" id="price" th:value="${product.price}"></td>
+				</tr>
+				<tr>
+					<td><label for="size">Size</label></td>
+					<td><input type="text" name="size" id="size" th:value="${product.size}"></td>
+				</tr>
+					<tr>
+					<td><label for="type">ProductType</label></td>
+					<td><input type="text" name="type" id="type" th:value="${product.type}"></td>
+				</tr>
+				<tr>
+					<td><label for="stock">Stock</label></td>
+					<td><input type="number" name="stock" id="stock" th:value="${product.stock}"></td>
+				</tr>
+				<tr>
+					<td><label for="description">Description</label></td>
+					<td><input type="text" name="description" id="description" th:value="${product.description}"></td>
+				</tr>
+				<tr>
+					<td><label for="image">Image</label></td>
+
+					<td> <input type="file" name="image" id="image"
+							th:src="'data:image/jpeg;base64,'+${product.base64Image()}"></td>
+					<td><img height="50px" width="50px" alt="Image"
+							th:src="'data:image/jpeg;base64,'+${product.base64Image()}"></td>
+				</tr>
+				<tr>
+					
+					<td><button style="margin: 5px;">Update</button></td>
+
+				</tr>
+			</table>
+		</form>
+
+		<a href="/manage-products"><button style="margin: 5px">Back</button></a>
+	</div>
+</body>
+
+</html>

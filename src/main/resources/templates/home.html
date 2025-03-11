@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>StyleTrademark</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+	<script src="/script/home.js" defer></script>
+</head>
+
+<body>
+
+	<!-- Navigation Bar -->
+	
+		<div th:replace="fragments/navbar :: navbar"></div>
+
+	
+
+
+
+	<section id="slider">
+		<div class="slideshow-container">
+			<div class="mySlides fade">
+				<div class="numbertext">1 / 3</div>
+				<img src="/images/slider/slider1.jpg" style="width:100%">
+				<div class="text">Caption Text</div>
+			</div>
+			<div class="mySlides fade">
+				<div class="numbertext">2 / 3</div>
+				<img src="/images/slider/slider2.jpg" style="width:100%">
+				<div class="text">Caption Two</div>
+			</div>
+			<div class="mySlides fade">
+				<div class="numbertext">3 / 3</div>
+				<img src="/images/slider/slider3.jpg" style="width:100%">
+				<div class="text">Caption Three</div>
+			</div>
+			<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+			<a class="next" onclick="plusSlides(1)">&#10095;</a>
+		</div>
+		<br>
+		<div style="text-align:center">
+			<span class="dot" onclick="currentSlide(1)"></span>
+			<span class="dot" onclick="currentSlide(2)"></span>
+			<span class="dot" onclick="currentSlide(3)"></span>
+		</div>
+	</section>
+
+	<section id="product1" class="section-p1">
+		<h2>Featured Products</h2>
+		<p>Summer Collection New Modern Design</p>
+		<div class="pro-container">
+			<div class="pro" th:each="product : ${list}">
+				<img th:src="'data:image/jpeg;base64,' + ${product.base64Image()}" alt="Image">
+				<div class="des">
+					<span th:text="${product.brand}"></span>
+					<h5 th:text="${product.name}"></h5>
+					<h5 th:if="${product.stock > 0}">Stock: <span th:text="${product.stock}"></span></h5>
+					<h4>₹<span th:text="${product.price}"></span></h4>
+				</div>
+				<a th:href="'/add-cart/'+${product.id}"><i class="fa-solid fa-cart-plus carticon"></i></a>
+
+			</div>
+		</div>
+	</section>
+	<!-- Footer -->
+	<footer class="section-p1">
+		<div class="col">
+			<img class="logo" src="img/logo.png" alt="Logo">
+			<h4>Contact</h4>
+			<p><strong>Address:</strong> East Medinipur, West Bengal, 721664</p>
+			<p><strong>Phone:</strong> +91 9382401072</p>
+			<p><strong>Hours:</strong> 10:00-18:00, Mon-Sat</p>
+			<div class="follow">
+				<h4>Follow Us</h4>
+				<div class="icon">
+					<a href="#"><i class="fab fa-facebook"></i></a>
+					<a href="#"><i class="fab fa-twitter"></i></a>
+					<a href="https://github.com/tapangurya"><i class="fab fa-github"></i></a>
+					<a href="#"><i class="fab fa-instagram"></i></a>
+					<a href="#"><i class="fab fa-pinterest-p"></i></a>
+					<a href="#"><i class="fab fa-youtube"></i></a>
+				</div>
+			</div>
+		</div>
+
+		<div class="col">
+			<h4>About</h4>
+			<a href="#">About Us</a>
+			<a href="#">Delivery Information</a>
+			<a href="#">Privacy Policy</a>
+			<a href="#">Terms & Conditions</a>
+			<a href="#">Contact Us</a>
+		</div>
+
+		<div class="col">
+			<h4>My Account</h4>
+			<a href="#">Sign In</a>
+			<a href="#">View Cart</a>
+			<a href="#">My Wishlist</a>
+			<a href="#">Track My Order</a>
+			<a href="#">Help</a>
+		</div>
+
+		<div class="col-install">
+			<h4>Install App</h4>
+			<p>From App Store or Google Play</p>
+			<div class="row">
+				<img src="img/app.jpg" alt="App Store">
+				<img src="img/play.jpg" alt="Google Play">
+			</div>
+			<p>Secured Payment Gateways</p>
+			<img src="/img/pay.png" alt="Payment Methods">
+		</div>
+		<div class="copyright">
+			<p>© 2025, StyleTrademark -Ecommerce</p>
+		</div>
+	</footer>
+
+	<script>
+		let slideIndex = 0;
+		showSlides();
+
+		function showSlides() {
+			let i;
+			let slides = document.getElementsByClassName("mySlides");
+			let dots = document.getElementsByClassName("dot");
+			for (i = 0; i < slides.length; i++) {
+				slides[i].style.display = "none";
+			}
+			slideIndex++;
+			if (slideIndex > slides.length) {slideIndex = 1}
+			for (i = 0; i < dots.length; i++) {
+				dots[i].className = dots[i].className.replace(" active", "");
+			}
+			slides[slideIndex - 1].style.display = "block";
+			dots[slideIndex - 1].className += " active";
+			setTimeout(showSlides, 2000);
+		}
+	</script>
+
+</body>
+</html>

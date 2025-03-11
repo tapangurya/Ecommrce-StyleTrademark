@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+	<script type="text/javascript" src="/script/home.js" defer="defer"></script>
+    <style>
+        body {
+            background-color: #f1f3f6;
+        }
+        .profile-container {
+            max-width: 900px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .profile-header img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+        .profile-header h4 {
+            margin: 0;
+        }
+        .profile-details {
+            display: flex;
+            flex-direction: column;
+        }
+        .profile-section {
+            margin-bottom: 15px;
+        }
+        .profile-section h5 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .edit-btn {
+            background-color: #2874f0;
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .edit-btn:hover {
+            background-color: #1b5cd8;
+        }
+    </style>
+</head>
+<body>
+<h3 id="fail-message" th:text="${session.fail}" style="display: none;"></h3>
+	<h4 id="pass-message" th:text="${session.pass}" style="display: none;"></h4>
+	<div id="popup" class="popup">
+		<th:block th:text="${@myService.removeMessage()}"></th:block>
+	</div>
+	<div th:replace="fragments/navbar :: navbar"></div>
+	
+
+<div class="container">
+    <div class="profile-container">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <img src="/images/default-user.png" alt="Profile Picture">
+            <div>
+                <h4 th:text="${session.customer.name}">Customer Name</h4>
+                <p class="text-muted">User ID: <span th:text="${session.customer.id}">12345</span></p>
+            </div>
+        </div>
+
+        <!-- Profile Details -->
+        <div class="profile-details">
+            <div class="profile-section">
+                <h5>Email</h5>
+                <p th:text="${session.customer.email}">customer@example.com</p>
+            </div>
+
+            <div class="profile-section">
+                <h5>Phone</h5>
+                <p th:text="${session.customer.mobile}">+91 9876543210</p>
+            </div>
+
+            <!-- <div class="profile-section">
+                <h5>Address</h5>
+                <p th:text="${session.customer.address}">No address provided</p>
+            </div>
+
+            <div class="profile-section">
+                <h5>Joined On</h5>
+                <p th:text="${session.customer.joinDate}">01-Jan-2024</p>
+            </div> -->
+
+            <!-- Edit Profile Button -->
+            <a href="/edit-profile" class="edit-btn"><i class="fa fa-edit"></i> Edit Profile</a>
+            <a href="/customer-home" class="edit-btn"><i class="fa fa-times"></i> Close</a>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Customer Login</title>
+	<link rel="stylesheet" href="/css/home.css">
+	<script type="text/javascript" src="/script/home.js" defer="defer"></script>
+</head>
+
+<body>
+	<h1>Customer Login</h1>
+	<!-- Hidden elements to store messages -->
+	<h3 id="fail-message" th:text="${session.fail}" style="display: none;"></h3>
+	<h4 id="pass-message" th:text="${session.pass}" style="display: none;"></h4>
+
+	<!-- Popup Notification -->
+	<div id="popup" class="popup">
+		<th:block th:text="${@myService.removeMessage()}"></th:block>
+	</div>
+	<div class="conatiner">
+
+		<form action="customer-login" method="post">
+			<label for="email">Email</label>
+			<input type="email" name="email" id="email" required="required"><br>
+			<label for="password">Password</label>
+			<input type="password" name="password" id="password" required="required"><br>
+			<div class="button">
+				<button type="submit">Login</button>
+
+			</div>
+			<span>Forgot password? <a href="customer-forgot">Click here</a></span><br>
+			<span>If you don't have an account, <a href="customer-signup">click here</a> to sign up.</span>
+
+		</form>
+		<a href="/"><button>Back</button></a>
+	</div>
+
+
+</body>
+
+</html>

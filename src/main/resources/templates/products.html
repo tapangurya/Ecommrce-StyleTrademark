@@ -1,0 +1,363 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Products</title>
+</head>
+<body>
+	<div align="center">
+		<h1>Manage Products</h1>
+<div class="message">
+		<h3 th:text="${session.fail}"></h3>
+		<h4 th:text="${session.pass}"></h4>
+		<th:block th:text="${@myService.removeMessage()}"></th:block>
+	</div>
+
+		<table border="1">
+			<tr>
+				<th>Image</th>
+				<th>Name</th>
+				<th>Brand</th>
+				<th>Description</th>
+				<th>Size</th>
+				<th>Stock</th>
+				<th>Price</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+
+			<tr th:each="product:${list}">
+				<td><img height="100px" width="100px"
+					th:src="'data:image/jpeg;base64,'+${product.base64Image()}"></td>
+				<td th:text="${product.name}"></td>
+				<td th:text="${product.brand}"></td>
+				<td th:text="${product.description}"></td>
+				<td th:text="${product.size}"></td>
+				<td th:text="${product.stock}"></td>
+				<td th:text="${product.price}"></td>
+				<td><a th:href="'/edit/'+${product.id}"><button>Edit</button></a></td>
+				<td><a th:href="'/delete/'+${product.id}"><button>Delete</button></a></td>
+			</tr>
+		</table>
+		<br>
+		<br> <a href="/seller-home"><button>Back</button></a>
+	</div>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Product</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script type="text/javascript" src="/script/home.js" defer="defer"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Fixed Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #007bff;
+            padding:  0;
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        /* Fixed Page Title */
+        .title-container {
+            position: fixed;
+            top: 60px; /* Below navbar */
+            width: 100%;
+            background: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+        }
+
+        /* Table Container for Scrolling */
+        .table-container {
+            margin-top: 60px; /* Space for fixed navbar and title */
+            height: 500px;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        /* Fixed Table Header */
+        thead {
+            position: sticky;
+            top: 0;
+            background-color: #007bff;
+            color: white;
+            z-index: 999;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+            transition: 0.3s;
+        }
+
+        img {
+            border-radius: 5px;
+            transition: transform 0.3s;
+        }
+
+        img:hover {
+            transform: scale(1.1);
+        }
+
+        button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .edit-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.8;
+            transform: scale(1.1);
+        }
+
+        /* Pagination */
+        .pagination {
+            margin: 5px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .pagination button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            border: 1px solid #007bff;
+            background-color: white;
+            color: #007bff;
+            cursor: pointer;
+        }
+
+        .pagination button.active {
+            background-color: #007bff;
+            color: white;
+        }
+        .custom-alert {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background-color: white;
+			padding: 20px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+			border-radius: 10px;
+			display: none;
+		}
+
+		.custom-alert button {
+			margin-top: 10px;
+			margin-bottom: 5px;
+			background-color: #dc3545;
+			color: white;
+		}
+    </style>
+</head>
+
+<body>
+
+    <!-- Fixed Navbar -->
+    <div class="navbar">
+        <div th:replace="fragments/sellernavbar :: sellernavbar"></div>
+    </div>
+
+    <!-- Fixed Title -->
+    <!-- <div class="title-container">
+        <h1>🛒 Seller Product List</h1>
+    </div> -->
+
+    <!-- Success/Error Messages -->
+    <h3 id="fail-message" th:text="${session.fail}" style="display: none;"></h3>
+	<h4 id="pass-message" th:text="${session.pass}" style="display: none;"></h4>
+
+	<!-- Popup Notification -->
+	<div id="popup" class="popup">
+		<th:block th:text="${@myService.removeMessage()}"></th:block>
+	</div>
+
+    <!-- Table Container -->
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Brand</th>
+                    <th>Description</th>
+                    <th>Size</th>
+                    <th>Stock</th>
+                    <th>Price</th>
+                    <th>Type</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody id="productTable">
+                <tr th:each="product:${list}">
+                    <td><img height="70" width="70" alt="Image" th:src="'data:image/jpeg;base64,'+${product.base64Image()}"></td>
+                    <td th:text="${product.name}"></td>
+                    <td th:text="${product.brand}"></td>
+                    <td th:text="${product.description}"></td>
+                    <td th:text="${product.size}"></td>
+                    <td th:text="${product.stock}"></td>
+                    <td th:text="${product.price}"></td>
+                    <td th:text="${product.type}"></td>
+                    <td>
+						<button class="edit-btn"
+							th:attr="onclick=|editProduct(event, '/edit/' + ${product.id})|">
+							Edit</button>
+					</td>
+					<td>
+						<button class="delete-btn"
+							th:attr="onclick=|deleteProduct(event, '/delete/' + ${product.id})|">
+							Delete</button>
+					</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+	
+    <!-- Pagination -->
+    <div class="pagination" id="pagination"></div>
+	<!-- Custom Alerts -->
+	<div id="customAlert" class="custom-alert">
+		<p>Are you sure you want to delete this product?</p>
+		<button onclick="confirmDelete()">Yes, Delete</button>
+		<button onclick="closeAlert()">Cancel</button>
+	</div>
+
+	<div id="editAlert" class="custom-alert">
+		<p>Are you sure you want to edit this product?</p>
+		<button onclick="confirmEdit()">Yes, Edit</button>
+		<button onclick="closeEditAlert()">Cancel</button>
+	</div>
+    <!-- <a href="/sellerhome"><button class="delete-btn">Back</button></a> -->
+
+    <!-- JavaScript -->
+    <script>
+    let editUrl = "";
+
+	function editProduct(event, url) {
+		event.preventDefault();
+		editUrl = url;
+		document.getElementById("editAlert").style.display = "block";
+	}
+
+	function confirmEdit() {
+		window.location.href = editUrl;
+	}
+
+	function closeEditAlert() {
+		document.getElementById("editAlert").style.display = "none";
+	}
+
+	let deleteUrl = "";
+
+	function deleteProduct(event, url) {
+		event.preventDefault();
+		deleteUrl = url;
+		document.getElementById("customAlert").style.display = "block";
+	}
+
+	function confirmDelete() {
+		window.location.href = deleteUrl;
+	}
+
+	function closeAlert() {
+		document.getElementById("customAlert").style.display = "none";
+	}
+
+
+        // Pagination Logic
+        const rowsPerPage = 4;
+        const table = document.getElementById("productTable");
+        const rows = table.getElementsByTagName("tr");
+        const totalPages = Math.ceil(rows.length / rowsPerPage);
+        const paginationDiv = document.getElementById("pagination");
+
+        function displayPage(page) {
+            for (let i = 0; i < rows.length; i++) {
+                rows[i].style.display = "none";
+            }
+            for (let i = (page - 1) * rowsPerPage; i < page * rowsPerPage && i < rows.length; i++) {
+                rows[i].style.display = "";
+            }
+        }
+
+        for (let i = 1; i <= totalPages; i++) {
+            let button = document.createElement("button");
+            button.innerText = i;
+            button.onclick = function () {
+                displayPage(i);
+                setActivePage(i);
+            };
+            paginationDiv.appendChild(button);
+        }
+
+        function setActivePage(page) {
+            let buttons = paginationDiv.getElementsByTagName("button");
+            for (let btn of buttons) {
+                btn.classList.remove("active");
+            }
+            buttons[page - 1].classList.add("active");
+        }
+
+        displayPage(1);
+        setActivePage(1);
+    </script>
+
+</body>
+
+</html>

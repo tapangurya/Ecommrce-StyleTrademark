@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Product View</title>
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">	 -->
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+	<script type="text/javascript" src="/script/home.js" defer="defer"></script>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f1f3f6;
+    }
+    h1 {
+        text-align: center;
+        font-size: 28px;
+        margin-top: 20px;
+        color: #333;
+    }
+    .container {
+        display: flex;
+        max-width: 98%;
+        margin: 50px auto;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+    .image-section {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .sub-images {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-right: 15px;
+    }
+    .sub-images img {
+        width: 90px;
+        height: 90px;
+        object-fit: cover;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: transform 0.3s;
+    }
+    .sub-images img:hover {
+        transform: scale(1.1);
+    }
+    .main-image img {
+        width: 350px;
+        height: 350px;
+        border-radius: 10px;
+        transition: opacity 0.5s ease-in-out;
+    }
+    .fade-in {
+        opacity: 0;
+    }
+    .details-section {
+        flex: 1;
+        padding: 20px;
+    }
+    .product-name {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    .size, .color {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    .color span {
+        display: inline-block;
+        width: 20px;
+        height: 20px; 
+        border-radius: 50%;
+        margin-left: 10px;
+    }
+    .price {
+        font-size: 22px;
+        color: #e44d26;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    .description {
+        font-size: 16px;
+        color: #555;
+        margin-bottom: 20px;
+    }
+    .action-buttons {
+        display: flex;
+        gap: 15px;
+    }
+    .btn {
+        padding: 12px 25px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background 0.3s;
+    }
+    .add-to-cart {
+        background: #ff9f00;
+        color: #fff;
+    }
+    .buy-now {
+        background: #fb641b;
+        color: #fff;
+    }
+    .btn:hover {
+        opacity: 0.9;
+    }
+</style>
+<script>
+    function changeMainImage(src) {
+        let mainImage = document.getElementById("main-product-image");
+        mainImage.classList.add("fade-in");
+        setTimeout(() => {
+            mainImage.src = src;
+            mainImage.classList.remove("fade-in");
+        }, 100);
+    }
+</script>
+</head>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div class="container">
+        <div class="image-section">
+            <div class="sub-images">
+                <img th:src="'data:image/jpeg;base64,' + ${product.base64Image()}" alt="Product Image" onclick="changeMainImage(this.src)">
+                <img th:src="'data:image/jpeg;base64,' + ${product.base64Image()}" alt="Product Image" onclick="changeMainImage(this.src)">
+                <img th:src="'data:image/jpeg;base64,' + ${product.base64Image()}" alt="Product Image" onclick="changeMainImage(this.src)">
+            </div>
+            <div class="main-image">
+                <img id="main-product-image" th:src="'data:image/jpeg;base64,' + ${product.base64Image()}" alt="Product Image">
+            </div>
+        </div>
+        <div class="details-section">
+            <div class="product-name" th:text="${product.name}"></div>
+            <div class="size">Size: <span th:text="${product.size}"></span></div>
+            <div class="color">Color: <span></span></div>
+            <div class="price">₹<span th:text="${product.price}"></span></div>
+            <div class="description" th:text="${product.description}"></div>
+            <div class="action-buttons">
+             <a th:if="${product.stock > 0}" th:href="'/add-cart/'+${product.id}">   <button class="btn add-to-cart" >Add to Cart</button></a>
+               <a href="/proceed"> <button class="btn buy-now" >Buy Now</button></a>
+            </div>
+        </div>
+    </div>
+    
+  <h1 class="heading">Related Products</h1>
+
+        <!-- Check if related products exist -->
+        <th:block th:if="${!list.isEmpty()}">
+           <div th:replace="~{fragments/view-product :: view-product}"></div> 
+        </th:block>
+		
+        <!-- Message if No Related Products Found -->
+        <th:block th:if="${list==null}">No related products found!</th:block>
+        <p class="empty" th:if="${list.isEmpty()}">
+            No related products found!
+        </p>
+	
+		 <div th:replace="~{fragments/footer :: footer}"></div>
+    
+</body>
+</html>
