@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Add Product</title>
+	<title>edit Product</title>
 	
 
 	<style>
@@ -118,13 +118,35 @@
 					<td><label for="description">Description</label></td>
 					<td><input type="text" name="description" id="description" th:value="${product.description}"></td>
 				</tr>
-				<tr>
-					<td><label for="image">Image</label></td>
+				<tr><!-- 
+					<td><label for="image">Image</label></td> -->
 
-					<td> <input type="file" name="image" id="image"
-							th:src="'data:image/jpeg;base64,'+${product.base64Image()}"></td>
-					<td><img height="50px" width="50px" alt="Image"
-							th:src="'data:image/jpeg;base64,'+${product.base64Image()}"></td>
+					<td>
+					    <input type="file" name="image1" id="image1">
+					</td>
+					<td><img height="50px" width="50px" alt="Product Image1" 
+					         th:src="${product.img1}" />
+					</td>
+				</tr>
+				<tr><!-- 
+					<td><label for="image">Image</label></td> -->
+
+					<td>
+					    <input type="file" name="image2" id="image2">
+					</td>
+					<td><img height="50px" width="50px" alt="Product Image2" 
+					         th:src="${product.img2}" />
+					</td>
+				</tr>
+				<tr><!-- 
+					<td><label for="image">Image</label></td> -->
+
+					<td>
+					    <input type="file" name="image3" id="image3">
+					</td>
+					<td><img height="50px" width="50px" alt="Product Image3" 
+					         th:src="${product.img3}" />
+					</td>
 				</tr>
 				<tr>
 					

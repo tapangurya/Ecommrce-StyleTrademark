@@ -133,12 +133,12 @@
     <div class="container">
         <div class="image-section">
             <div class="sub-images">
-                <img th:src="'data:image/jpeg;base64,' + ${product.base64Image()}" alt="Product Image" onclick="changeMainImage(this.src)">
-                <img th:src="'data:image/jpeg;base64,' + ${product.base64Image()}" alt="Product Image" onclick="changeMainImage(this.src)">
-                <img th:src="'data:image/jpeg;base64,' + ${product.base64Image()}" alt="Product Image" onclick="changeMainImage(this.src)">
+                <img th:src="${product.img1}" alt="Product Image" onclick="changeMainImage(this.src)">
+                <img th:src="${product.img2}" alt="Product Image" onclick="changeMainImage(this.src)">
+                <img th:src="${product.img3}" alt="Product Image" onclick="changeMainImage(this.src)">
             </div>
             <div class="main-image">
-                <img id="main-product-image" th:src="'data:image/jpeg;base64,' + ${product.base64Image()}" alt="Product Image">
+                <img id="main-product-image" th:src="${product.img1}" alt="Product Image">
             </div>
         </div>
         <div class="details-section">

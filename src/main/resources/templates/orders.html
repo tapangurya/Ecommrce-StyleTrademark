@@ -1,12 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="ISO-8859-1">
-<title>View Orders</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>View Orders</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f4f4f4;
+			margin: 0;
+			padding: 0;
+		}
+		.container {
+			width: 80%;
+			margin: auto;
+			overflow: hidden;
+		}
+		table {
+			width: 100%;
+			margin: 20px 0;
+			border-collapse: collapse;
+		}
+		table, th, td {
+			border: 1px solid #ddd;
+		}
+		th, td {
+			padding: 12px;
+			text-align: left;
+		}
+		th {
+			background-color: #f2f2f2;
+		}
+		tr:nth-child(even) {
+			background-color: #f9f9f9;
+		}
+		.btn {
+			display: inline-block;
+			padding: 10px 20px;
+			font-size: 16px;
+			cursor: pointer;
+			text-align: center;
+			text-decoration: none;
+			outline: none;
+			color: #fff;
+			background-color: #4CAF50;
+			border: none;
+			border-radius: 15px;
+			box-shadow: 0 9px #999;
+		}
+		.btn:hover {background-color: #3e8e41}
+		.btn:active {
+			background-color: #3e8e41;
+			box-shadow: 0 5px #666;
+			transform: translateY(4px);
+		}
+	</style>
 </head>
 <body>
-	<div align="center">
-		<table border="1">
+	<div class="container">
+		<h1 align="center">Order Details</h1>
+		<table>
 			<tr>
 				<th>Order Id</th>
 				<th>Payment Id</th>
@@ -15,21 +68,19 @@
 				<th>Time</th>
 				<th>Status</th>
 			</tr>
-			
-			<tr th:each="order:${orders}">
-				<th th:text="${order.orderId}"></th>
-				<th th:text="${order.paymentId}"></th>
-				<th></th>
-				<th th:text="${order.price}"></th>
-				<th th:text="${order.timeStamp}"></th>
-				<th th:if="${order.status}">Payment Done</th>
-				<th th:if="${!order.status}">Cancelled</th>
+			<tr th:each="order : ${orders}">
+				<td th:text="${order.orderId}"></td>
+				<td th:text="${order.paymentId}"></td>
+				<td th:text="${order.id}"></td>
+				<td th:text="${order.price}"></td>
+				<td th:text="${order.timeStamp}"></td>
+				<td th:text="${order.status ? 'Payment Done' : 'Cancelled'}"></td>
 			</tr>
-			
-
 		</table>
-
-		<br> <a href="/customer-home"><button>Back</button></a>
+		<div align="center">
+			<a href="/customer-home" class="btn">Back</a>
+		</div>
 	</div>
+	
 </body>
 </html>

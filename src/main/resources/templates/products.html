@@ -246,7 +246,7 @@
             </thead>
             <tbody id="productTable">
                 <tr th:each="product:${list}">
-                    <td><img height="70" width="70" alt="Image" th:src="'data:image/jpeg;base64,'+${product.base64Image()}"></td>
+                    <td><img height="70" width="70" alt="Image" th:src="${product.img1}"></td>
                     <td th:text="${product.name}"></td>
                     <td th:text="${product.brand}"></td>
                     <td th:text="${product.description}"></td>

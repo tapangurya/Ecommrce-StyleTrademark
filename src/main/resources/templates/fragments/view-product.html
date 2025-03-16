@@ -1,10 +1,10 @@
 
     <section id="product1" class="section-p1" th:fragment="view-product">
-        <!-- <h2>Featured Products</h2>
-        <p>Summer Collection New Modern Design</p> -->
         <div class="pro-container">
             <div class="pro" th:each="product : ${list}">
-                <a th:href="'/quick-view/'+${product.id}"><img th:src="'data:image/jpeg;base64,' + ${product.base64Image()}" alt="Image"></a>
+               <a th:href="'/quick-view/' + ${product.id}">
+    <img th:src="${product.img1}" alt="Product Image">
+</a>
                 <div class="des">
                     <span th:text="${product.brand}"></span>
                     <h5 th:text="${product.name}"></h5>

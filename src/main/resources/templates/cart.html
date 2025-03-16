@@ -128,7 +128,7 @@
             </tr>
 
             <tr th:each="item:${items}">
-                <td><img height="80px" width="80px" th:src="'data:image/jpeg;base64,'+${item.base64Image()}"></td>
+                <td><img height="80px" width="80px" th:src="${item.picture}"></td>
                 <td th:text="${item.brand}+' '+${item.name}"></td>
                 <td th:text="${item.size}"></td>
                 <td th:text="${item.price}+' &#8377;'"></td>
